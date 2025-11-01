@@ -1,6 +1,7 @@
 import readline from "node:readline";
-import messages from "./constants/messages.js";
 import parseArgs from "./utils/parseArgs.js";
+import messages from "./constants/messages.js";
+import File from "./controllers/file.controller.js";
 import { Navigation } from "./controllers/navigation.controller.js";
 
 const rl = readline.createInterface({
@@ -9,9 +10,14 @@ const rl = readline.createInterface({
 });
 
 const nav = new Navigation();
+const file = new File();
+
+const currentDir = () => messages.info.current_dir(process.cwd());
 
 function expense_tracker() {
-  rl.question(`File-manager: `, (command) => {
+  rl.question(`File-manager: `, async (command) => {
+    const argOne = command.split(" ")[1];
+    const argTwo = command.split(" ")[2];
     switch (command.split(" ")[0]) {
       case ".exit":
         rl.close();
@@ -20,22 +26,44 @@ function expense_tracker() {
         nav.up();
         break;
       case "cd":
-        nav.cd(command.split(" ")[1]);
+        nav.cd(argOne);
         break;
       case "ls":
         nav.ls();
+        break;
+      case "read":
+        await file.read(argOne);
+        break;
+      case "add":
+        await file.add(argOne);
+        break;
+      case "mkdir":
+        await file.mkdir(argOne);
+        break;
+      case "rename":
+        await file.rename(argOne, argTwo);
+        break;
+      case "copy":
+        await file.copy(argOne, argTwo);
+        break;
+      case "move":
+        await file.move(argOne, argTwo);
+        break;
+      case "remove":
+        await file.remove(argOne);
         break;
       default:
         console.log(messages.error.operation_failed);
         break;
     }
-    console.log(messages.info.current_dir(process.cwd()));
+    console.log(currentDir());
     expense_tracker();
   });
 }
 const username = parseArgs().username || "Anonymous";
 
 console.log(messages.info.welcome(username));
+console.log(currentDir());
 expense_tracker();
 
 rl.on("close", () => {
