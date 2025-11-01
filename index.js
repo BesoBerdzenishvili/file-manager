@@ -37,7 +37,7 @@ function expense_tracker() {
       case "ls":
         nav.ls();
         break;
-      case "read":
+      case "cat":
         await file.read(argOne);
         break;
       case "add":
@@ -46,16 +46,16 @@ function expense_tracker() {
       case "mkdir":
         await file.mkdir(argOne);
         break;
-      case "rename":
+      case "rn":
         await file.rename(argOne, argTwo);
         break;
-      case "copy":
+      case "cp":
         await file.copy(argOne, argTwo);
         break;
-      case "move":
+      case "mv":
         await file.move(argOne, argTwo);
         break;
-      case "remove":
+      case "rm":
         await file.remove(argOne);
         break;
       case "os":
