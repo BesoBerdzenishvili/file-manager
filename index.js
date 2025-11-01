@@ -1,3 +1,4 @@
+import os from "os";
 import readline from "node:readline";
 import parseArgs from "./utils/parseArgs.js";
 import messages from "./constants/messages.js";
@@ -80,6 +81,7 @@ function expense_tracker() {
 const username = parseArgs().username || "Anonymous";
 
 console.log(messages.info.welcome(username));
+process.chdir(os.homedir());
 console.log(currentDir());
 expense_tracker();
 

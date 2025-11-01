@@ -1,10 +1,11 @@
+import os from "os";
 import fs from "fs";
 import path from "path";
 import messages from "../constants/messages.js";
 
 export class Navigation {
   constructor() {
-    this.currentDir = process.cwd();
+    this.currentDir = os.homedir();
   }
 
   up() {
