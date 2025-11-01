@@ -2,6 +2,7 @@ import readline from "node:readline";
 import parseArgs from "./utils/parseArgs.js";
 import messages from "./constants/messages.js";
 import File from "./controllers/file.controller.js";
+import systemInfo from "./controllers/os.controller.js";
 import { Navigation } from "./controllers/navigation.controller.js";
 
 const rl = readline.createInterface({
@@ -51,6 +52,9 @@ function expense_tracker() {
         break;
       case "remove":
         await file.remove(argOne);
+        break;
+      case "os":
+        systemInfo(argOne);
         break;
       default:
         console.log(messages.error.operation_failed);
