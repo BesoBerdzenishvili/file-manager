@@ -4,6 +4,7 @@ import messages from "./constants/messages.js";
 import File from "./controllers/file.controller.js";
 import Hash from "./controllers/hash.controller.js";
 import systemInfo from "./controllers/os.controller.js";
+import Compression from "./controllers/compression.controller.js";
 import { Navigation } from "./controllers/navigation.controller.js";
 
 const rl = readline.createInterface({
@@ -14,6 +15,7 @@ const rl = readline.createInterface({
 const nav = new Navigation();
 const file = new File();
 const hash = new Hash();
+const compression = new Compression();
 
 const currentDir = () => messages.info.current_dir(process.cwd());
 
@@ -60,6 +62,12 @@ function expense_tracker() {
         break;
       case "hash":
         await hash.file(argOne);
+        break;
+      case "compress":
+        await compression.compress(argOne, argTwo);
+        break;
+      case "decompress":
+        await compression.decompress(argOne, argTwo);
         break;
       default:
         console.log(messages.error.operation_failed);
